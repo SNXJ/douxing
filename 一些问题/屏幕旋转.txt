@@ -1,0 +1,28 @@
+
+
+
+
+
+
+
+1屏幕不切换  
+
+在指定的Activity中配置android:screenOrientation属性
+ 
+代码setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+
+
+2两套布局：
+
+在res目录下建立layout-land和layout-port目录
+
+onRestoreInstanceSstate();取出数据
+onSaveInstanceState();保存数据
+
+newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
+判断屏幕状态
+
+3拦截横竖屏变换（生命周期不变）
+
+对应activity上配置configChange="orientation|keyboardHidden|screenSize"
+去执行onConfigurationChanged获取当前屏幕参数  判断横竖屏状态显示对应状态

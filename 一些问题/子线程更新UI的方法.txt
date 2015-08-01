@@ -1,0 +1,34 @@
+
+
+1runOnUiThread();
+子线程中持有当前Activity引用（假如为Activity mActivity;），即可以调用mActivity的runOnUiThread(Runnable r)方法。
+2post()和postdely()
+
+子线程如果持有某个View的引用，要对该View进行更新，则可调用该View对象的post(Runnable r)或postDelay(Runnable r)方法
+Handler对象也有post()方法。其实在Android的源码中，这些post()方法都是借助下面的第3种方法：Handler + Message来实现的。
+
+3Handler+Message 或者Handler+Thread+Message
+
+主线程建立时，默认情况下是有Looper的，可以处理消息队列。
+在主线程建立一个Handler对象，复写其handleMessage()方法，在该方法中实现UI更新。
+
+4Broadcast 
+
+子线程中发送广播，主线程中接收广播并更新UI
+
+5AsyncTask
+
+AsyncTask可方便地实现新开一个线程，并将结果返回给UI线程，而不需要开发者手动去新开一个线程，也无须开发者使用Handler，非常方便。
+应当注意的是AsyncTask是一个抽象类，其三个泛型参数的意义如下：
+AsyncTask<Param, Progress, Result>
+Param:发送给新开的线程的参数类型
+Progress：表征任务处理进度的类型。
+Result:线程任务处理完之后，返回给UI线程的值的类型。
+
+该类中有四个抽象函数，onPreExecute(), doInBackground(Params... param),
+onProgressUpdate(Progress... progress), onPostExecute(Result result)。
+除了，doInBackground(Params...)方法，其它三个方法都运行在UI线程。
+
+自定义一个类继承AsyncTask并至少实现doInBackground（）函数。在该函数中执行的过程中，可以随时调用publishProgress(Progress...)报告其执行进度。此时会触发另一个方法onProgressUpdate(Progress... progress)，以便在UI线程中的某些控件（如ProgressBar）上更新任务处理的进度。
+也可以等doInBackground()执行完，进入onPostExecute()方法后，再进行UI控件的更新。
+可在任意时间，任意线程中，取消AsyncTask开启的任务（调用自定义的AsynTask子类的cancel(boolean mayInterruptIfRunning)方法）

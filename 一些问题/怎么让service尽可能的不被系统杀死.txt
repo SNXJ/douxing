@@ -1,0 +1,33 @@
+http://blog.csdn.net/mad1989/article/details/22492519
+
+
+1两个服务相互监视
+2onStartCommand方法，返回START_STICKY
+3提升service优先级
+
+	在AndroidManifest.xml文件中对于intent-filter可以通过android:priority = "1000"这个属性设置最高优先级，1000是最高值	，如果数字越小则优先级越低，同时适用于广播。
+
+4提升service进程优先级
+	使用startForeground 将service放到前台状态
+
+5onDestroy方法里重启service
+
+service +broadcast  方式，就是当service走ondestory的时候，发送一个自定义的广播，当收到广播的时候，重新启动service；
+
+6Application加上Persistent属性
+
+看Android的文档知道，当进程长期不活动，或系统需要资源时，会自动清理门户，杀死一些Service，和不可见的Activity等所在的进程。但是如果某个进程不想被杀死（如数据缓存进程，或状态监控进程，或远程服务进程）
+    <application
+        android:name="com.test.Application"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+       <span style="color:#ff0000;"> android:persistent="true"</span>
+        android:theme="@style/AppTheme" >
+    </application>
+
+7监听系统广播判断Service状态
+
+8将APK安装到/system/app，变身系统级应用
+
+

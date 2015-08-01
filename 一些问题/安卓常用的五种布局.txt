@@ -1,0 +1,5 @@
+线性布局  LinearLayout 
+相对布局  RelativeLayout  
+框架布局(帧布局)   FrameLayout 
+绝对布局  AbsoluteLayout  
+表格布局  TableLayout 

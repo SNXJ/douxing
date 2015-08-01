@@ -1,0 +1,38 @@
+在ScrollView中嵌套使用ListView，ListView只会显示一行到两行的数据。
+起初我以为是样式的问题，一直在对XML文件的样式进行尝试性设置，但始终得不到想要的效果。后来在网上查了查，ScrollView和ListView两个View都有滚动的效果，在嵌套使用时起了冲突，一般不建议两者套用。
+
+下面说说具体解决方案。
+方案的主要思路就是根据ListView子项重置其高度。
+onMeasure()测量  layoutParams（）重新设置
+
+解决方案代码如下：
+
+java代码：
+
+/** 
+     * 重新计算ListView的高度，解决ScrollView和ListView两个View都有滚动的效果，在嵌套使用时起冲突的问题 
+     * @param listView 
+     */ 
+    public void setListViewHeight(ListView listView) {   
+           
+        // 获取ListView对应的Adapter   
+       
+        ListAdapter listAdapter = listView.getAdapter();   
+       
+        if (listAdapter == null) {   
+            return;   
+        }   
+        int totalHeight = 0;   
+        for (int i = 0, len = listAdapter.getCount(); i < len; i++) { // listAdapter.getCount()返回数据项的数目   
+            View listItem = listAdapter.getView(i, null, listView);   
+            listItem.measure(0, 0); // 计算子项View 的宽高   
+            totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度   
+        }   
+       
+        ViewGroup.LayoutParams params = listView.getLayoutParams();   
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));   
+        listView.setLayoutParams(params);   
+    }   
+在设置LIstView的Adapter后调用此方法便可。
+
+但是要注意的是，子ListView的每个Item必须是LinearLayout，不能是其他的，因为其他的Layout(如RelativeLayout)没有重写onMeasure()，所以会在onMeasure()时抛出异常。

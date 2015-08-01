@@ -1,0 +1,54 @@
+private void download(String downloadurl) {
+		// TODO Auto-generated method stub
+		HttpUtils http = new HttpUtils();
+		http.download(downloadurl, "/mnt/sdcard/xxx.apk", new RequestCallBack<File>() {
+			
+			@Override
+			//下载成功
+			public void onSuccess(ResponseInfo<File> arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("下载成功");
+				Intent intent = new Intent();
+				intent.addCategory("android.intent.category.DEFAULT");
+				intent.setAction("android.intent.action.VIEW");
+				//intent.setData(Uri.fromFile(new File("/mnt/sdcard/xxx.apk")));
+				//intent.setType("application/vnd.android.package-archive");
+				intent.setDataAndType(Uri.fromFile(new File("/mnt/sdcard/xxx.apk")), "application/vnd.android.package-archive");
+				
+				
+				
+				startActivityForResult(intent, 0);
+				
+				
+				
+				/* <action android:name="android.intent.action.VIEW" />
+	                <category android:name="android.intent.category.DEFAULT" />
+	                <data android:scheme="content" />
+	                <data android:scheme="file" />
+	                <data android:mimeType="application/vnd.android.package-archive" />*/
+				
+			}
+			
+			@Override
+			//下载失败
+			public void onFailure(HttpException arg0, String arg1) {
+				// TODO Auto-generated method stub
+				Toast.makeText(SplashActivity.this, "下载失败", 0).show();
+				//返回主界面
+				loadMainUI();
+				
+			}
+			@Override
+			//下载中
+			public void onLoading(long total, long current, boolean isUploading) {
+				// TODO Auto-generated method stub
+				
+				tv_splash_info.setText(current+"/"+total);
+				System.out.println("正在下载");
+				super.onLoading(total, current, isUploading);
+			}
+		});
+	
+		
+		
+	}

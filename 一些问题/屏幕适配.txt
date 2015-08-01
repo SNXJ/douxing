@@ -1,0 +1,63 @@
+1使用wrap_content、match_parent、weight(线性布局的特有属性)
+API 级别 8 的级别中称为 “fill_parent”
+
+
+2使用相对布局，禁用绝对布局
+
+
+
+3使用限定符
+
+
+4使用非密度制约像素
+	
+请使用 dp（而非 px）指定两个视图间的间距
+使用 sp 指定文字大小：
+
+5多套图  新建对应的资源文件夹（layout  Value）
+
+
+6ImageView的ScaleType属性
+
+
+7代码适配
+
+
+
+设置不同的ScaleType会得到不同的显示效果，一般情况下，设置为centerCrop能获得较好的适配效果。
+
+
+1、不要使用绝对布局
+2、尽量使用match_parent 而不是fill_parent 。
+3、能够使用权重的地方尽量使用权重（android:layout_weight）
+4、如果是纯色背景，尽量使用android的shape 自定义。
+5、如果需要在特定分辨率下适配，可以在res目录上新建layout-HxW.xml的文件夹。比如要适配1080*1800的屏幕（魅族MX3采用此分辨率）则新建layout-1800x1080.xml的文件夹，然后在下面定义布局。Android系统会优先查找分辨率相同的布局，如果不存在则换使用默认的layout下的布局。
+
+
+   ldpi:  240左右（0.75）120
+   mdpi： 360左右（1倍） 160
+
+   hdpi：480左右(1.5倍)  240
+
+   xhdpi：720左右(2倍)   320
+
+   xxhdpi：1080左右(3倍)  480
+
+   xxxhdpi：1440左右(4倍) 720
+
+
+
+
+DisplayMetrics metric = new DisplayMetrics(); 
+getWindowManager().getDefaultDisplay().getMetrics(metric); 
+int width = metric.widthPixels; // 屏幕宽度（像素） 
+int height = metric.heightPixels; // 屏幕高度（像素） 
+float density = metric.density; // 屏幕密度（0.75 / 1.0 / 1.5） 
+int densityDpi = metric.densityDpi; // 屏幕密度DPI（120 / 160 / 240） 
+
+
+
+DisplayMetrics metrics = new DisplayMetrics();
+Display display = activity.getWindowManager().getDefaultDisplay();
+display.getMetrics(metrics);
+

@@ -1,0 +1,16 @@
+1.在说事件传递之前先说3个方法  
+dispatchTouchEvent(MotionEvent ev)//是用来分派事件的
+onInterceptTouchEvent(MotionEvent ev) //是用来拦截event
+onTouchEvent(MotionEvent ev)  // 是用来处理event的  返回true代表可以处理事件,事件将不再往下传递
+
+2.一般拥有这3个方法的类
+
+Activity类  :   拥有分派事件和处理事件的方法
+View容器(ViewGroup的子类):分派 处理 拦截 
+View控件(非ViewGroup的子类): 分派 处理
+
+3.一个点击事件分为触摸和离开两个部分(任务)
+  一般情况下当一个点击事件发生时,会先由activity接收到,它可以选择处理或者分派到他的下一级View容器,
+  也可以选择处理(事件不再传递),如果选择往下分发,View容器接收到这个事件,它也可以选择继续分派 或者拦截 ,或者处理
+  如果选择分发,默认传到最底层,View控件 接收到这个事件,可以选择处理或者分派,如果选择不处理下次他的上一级将不会将任务交给它;
+

@@ -1,0 +1,5 @@
+1.SharedPreference   
+2.XML  
+3.SQLite
+4.文件系统
+5.内存(如果算的话)

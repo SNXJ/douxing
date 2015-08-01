@@ -1,0 +1,4 @@
+顶层是Throwable接口，往下分了两大类，一个RunntimeException另一个是普通的Exception
+
+当然知道，java的命名是见名知意的。从名字上我们也知道RunntimeException就是运行时异常，
+在运行的时候才能被jvm发现最终导致程序的终止，而普通Exception必须进行try、catch处理，或者在方法上用throws声明。

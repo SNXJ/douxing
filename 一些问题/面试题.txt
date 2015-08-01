@@ -1,0 +1,34 @@
+View：显示视图，内置画布，提供图形绘制函数、触屏事件、按键事件函数等；必须在UI主线程内更新画面，速度较慢。
+
+　
+SurfaceView：基于view视图进行拓展的视图类，更适合2D游戏的开发；是view的子类，类似使用双缓机制，在新的线程中更新画面所以刷新界面速度比view快。
+
+　　
+GLSurfaceView：基于SurfaceView视图再次进行拓展的视图类，专用于3D游戏开发的视图；是SurfaceView的子类，openGL专用。
+
+2.java如何调用c、c++语言？ 
+  java通过JNI调用C/C++代码，在使用的时候首先通过System.loadLibrary("xxx")将xxx.so文件加载到jvm中，同时在类中必须对so文件中的方法进行声明，格式:public native void test();1
+3.Android分几层，分别是什么？
+  四层。Linux Core、Libraries（Android Runtime）、Application Framework、Applications。
+4.final、finally、finalize的区别？
+  第一个是关键字最终，用final修饰的类为最终类，不能被继承，修饰的方法不能被覆写，修饰的变量不能被改变。finally是异常体系中的关键字，当系统遇到异常是，在进行trycatch的时候，finally代码块里的代码是必须被执行的。finalize是Object类中的方法，当GC回收对象时回调的方法。
+5.heap和stack的区别？
+  堆和栈。栈存放对象的引用，堆存放对象实体。堆中的对象是有jvm的垃圾回收器负责回收
+6.安卓的四大组件
+  Activity  Service  ContentProvider BroadcastReceiveer
+7.如何将一个Activity设置成窗口模式?
+  将Activit的样式设置成:  android:theme="@android:style/Theme.Dialog
+8.如何退出Activity? 如何安全退出已调用多个Activity的Application?
+  调用Activity的finish方法可以退出当前Activity,可以自定义一个application,在application声明一个成员变量ArrayList用于存放打开的Activity,当退出时变量ArrayList,依次调用Activity的finish方法
+9.DDMS和TraceView的区别
+  DDMS 的全称是Dalvik Debug Monitor Service，是 Android 开发环境中的Dalvik虚拟机调试监控服务。TraceView是程序性能分析器
+10.说说Activity,Intent,Service以及他们之间的关系
+   Activity负责界面的显示和用户的交互,Intent用于封装数据,可以实现Activity之间以及与Service之间数据的传递,而Service运行在后台进程一般我们会让其运行一下后台任务,Activity通过startService 和 BindService来开启一个服务
+11.请介绍一下ContentProvider是如何实现数据共享的 
+   我们可以定义一个类继承ContentProvider,然后复写该类的insert,delete,update等方法,在这些方法中访问数据库资源,同时我们将ContentProvider注册在AndroidManifest文件中,其他应用需要使用的时候只需要获取ContentResolver,然后通过ContentResolver访问即可.
+
+12.那Fragment跟Activity之间是如何实现值传递的？(重点)
+   Activity可以先获取FragmentSupportManager或者FragmentManager，前者是v4包下的，向下兼容因此用的比较多。然后这些Manager通过Fragment的tag或者id调用findFragmentByTag("tag")，findFragmentById("id")找到我们需要的Fragment对象，然后通过调用Fragment对象的方法来进行值的传递。
+13.Android都有哪些组件需要在清单文件中注册?
+   一般来说四大组件都需要在AndroidManifest.xml中进行注册,其中Activity,Service,ContentResolver是必须注册的,而BroadCastReceiver可以在清单文件中注册,也可以在代码中注册,这也分别叫做静态注册和动态注册.
+14.接口的作用:隐藏应用程序内部的细节    抽取公共的逻辑,用于解耦;

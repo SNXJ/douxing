@@ -1,0 +1,78 @@
+Android构架次层如何划分的?
+1.什么情况下需要在源码下开发?
+	根据自己的需求更改系统的界面或功能
+2.Android支持哪几个环境下编译?
+	只支持Ubuntu和Mac OS系统
+3.下载源码需要多少空间?编译呢?
+	2.3版本源码3GB,编译需要10GB
+4.下载源码需要用到的工具?
+	apt-get install git-core	
+5.apt-get作用是什么?工作原理呢?
+	apt-get是一条linux命令适用于deb包管理式的操作系统，
+	主要用于自动从互联网的软件仓库中搜索、安装、升级、卸载软件或操作系统。
+	是debian，ubuntu发行版的包管理工具。为了便于下载可以下载repo脚本.
+6.下载源码你一般需要几个小时?
+	6-7个小时
+7.编译源码需要jdk最低版本是多少?
+	2.2系统JDK1.5,2.3系统JDK1.6
+8.编译必须完整编译整个系统吗?
+	不需要
+9.编译源码大概要多久?
+	6-7小时
+10.编译的结果在哪个目录下?
+	/out目录下
+11.编译出的三个最重要的img文件是什么?
+	ramdisk.img
+	system.img
+	userdata.img
+12.编译系统的核心工具是什么?
+	Build系统
+13.Android启动的顺序是什么?
+	Runtime-->Libraries-->Framework
+14.常用来看源码的工具是什么?
+	Source insight
+15.导入源码需要注意的问题是什么?
+	不要混淆源代码和在工具中创建的工程
+	不要导入git和out文件，使用Add Tree
+	弄清文件夹system/init/core
+16.Android启动的核心配置文件是什么?
+	init.rc
+17.Zygote的作用是什么?
+	启动时初始化，android的服务和应用程序都是由Zygote启动的。
+	Zygote进程在孵化新进程时，能有效减少系统负担，提高进程孵化速度。
+18.Zygoteinit是怎么启动的?
+	init.c中的main方法中加载init.rc配置文件,开启服务,启动app_main.cpp,
+	通过runtime.start()方法加载启动ZygoteInit.java
+19.Native层在什么时候启动?
+	执行完init1方法
+20.FrameWork层在什么时候启动?
+	执行完init2方法
+21.初始进程init主要工作是什么?
+	创建文件夹,挂载设备,重定向输入输出,设置LOG输出
+	启动级别的控制,开启守护进程,解析当前设备相关的配置文件
+22.app_main执行的主要工作是什么?
+	启动虚拟机
+	注册JNI
+	启动ZygoteInit
+23.Zygote的主要工作内容是什么?
+	preloadClasses():通过反射加载了近2000个类
+为什么Android启动慢?
+	一次性加载到内存2000个类,比较耗时,
+24.PackageMangerService主要的作用是?
+	PackageManagerService读取所有应用程序的Mainfest信息，并且建立信息库存储在
+	系统级共享内存中，在packages.xml和package.list文件中还有存有一份(为了防止
+	内存溢出的时候，内存中的被回收，之后加载用)
+25.在应用主Activity清单文件中加Launcher标识的作用?
+	给应用程序添加个图标并给定入口
+26.一个应用启动首先执行的是不是onCtrete方法?
+	不是,是attach方法
+27.什么时候Launcher隐藏?
+	当ActivityThread启动后,调用onPause()方法后
+28.attach方法在什么时候执行?
+	Launcher隐藏后
+29.一个应用有几个ActivityThread进程?
+	只有1个
+
+
+
+

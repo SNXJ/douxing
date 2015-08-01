@@ -1,0 +1,12 @@
+1.px (pixels)（像素）：屏幕上的点 ，与密度相关。密度大了，单位面积上的px会比较多。 
+2.dip或dp（与密度无关的像素）。这个和设备硬件有关，为了支持WVGA、HVGA和QVGA 5进制空间推荐使用这个。一种基于屏幕密度的抽象单位。设置一些view的宽高可以用这个，一般情况下，在不同分辨率，都不会有缩放的感觉。如果用px的话，320px占满HVGA的宽度，到WVGA上就只能占一半不到的屏幕了，那一定不是你想要的。 
+3.sp（与刻度无关的像素）放大像素– 主要处理字体的大小。
+
+但是，需要注意的是，在一个低密度的小屏手机上，仅靠上面的代码是不能获取正确的尺寸的。比如说，一部240x320像素的低密度手机，如果运行上述代码，获取到的屏幕尺寸是320x427。因此，研究之后发现，若没有设定多分辨率支持的话，Android系统会将240x320的低密度（120）尺寸转换为中等密度（160）对应的尺寸，这样的话就大大影响了程序的编码。所以，需要在工程的AndroidManifest.xml文件中，加入supports-screens节点，具体的内容如下：
+        <supports-screens
+            android:smallScreens="true"
+            android:normalScreens="true"
+            android:largeScreens="true"
+            android:resizeable="true"
+            android:anyDensity="true" />
+这样的话，当前的Android程序就支持了多种分辨率，那么就可以得到正确的物理尺寸了。

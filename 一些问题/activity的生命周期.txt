@@ -1,0 +1,5 @@
+1.一个Activity的完整生命周期?
+
+onCreate  onStart  onResume  onPause  onStop  onDestroy onRestart 
+
+2.(待完善 可见生命周期 前台生命周期)

@@ -1,0 +1,17 @@
+keytool -list -keystore debug.keystore
+SHA1£º 32:CC:99:DB:8F:D2:C3:E2:8A:F8:1C:7B:2F:1A:74:33:7C:12:D6:15
+
+Copyright?2015
+
+face++  ++SNXJ++
+
+API Key
+6a2a68dcf69f22af8973add248c3ae07
+
+API Secret
+
+T5gt2HhXXJlVax_ExaJp0IKA5IM2tsNE 
+
+API Url
+
+apicn.faceplusplus.com

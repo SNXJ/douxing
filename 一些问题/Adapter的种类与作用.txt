@@ -1,0 +1,16 @@
+Adapter作用
+一个Adapter是AdapterView视图与数据之间的桥梁，Adapter提供对数据的访问，
+也负责为每一项数据产生一个对应的View
+
+
+
+常见的由
+ListView:
+BaseAdapter  ArrayAdapter SimpleAdapter  PagerAdapter
+
+ViewPager:
+ PagreAdapter  FragmentPagerAdapter 或FragmentStatePagerAdapter。
+
+
+
+种类太过了http://blog.csdn.net/lonelyroamer/article/details/7525834

@@ -1,0 +1,5 @@
+1.Android Interface Definition  Language  
+2.AIDL 一般用于远程服务,也就是进程间通信.我们可以分服务端和客户端,服务端
+  声明AIDL文件,该文件命名为xxx.aidl,ADT会自动将xxx.aidl生成代码文件,代码
+  文件提供了aidl中接口的实现.客户端如果要使用服务端提供的服务需要将xxx.aidl文件放到客户端源代码目录下，然后生成xxx.java类，客户端通过bindService的形参ServiceConnection的onServiceConnected获取到Service对象，这个对象通过Stub.asInterface（service）返回aidl的实现类。之后我们就可用调用这个aidl的实现类。
+3.基本数据类型都可以，复杂对象也可以，只不过需要实现Parcelable接口。

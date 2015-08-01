@@ -1,0 +1,20 @@
+：ListView的优化有多种多样的策略。在我们的项目中主要做了如下优化。
+1、重用ConvertView，
+2、给ConvertView绑定ViewHolder， 安卓5.0中recyclerView 需要实现onCreatViewHolder 和onBindViewHolder
+3、分页加载数据，
+4、使用缓存。
+前两个是通用的解决方案，后两个是针对我们业务的个性化解决方案。我们的数据来自服务端，如果服务端有1000条数据的话，
+我们客户端不可能傻瓜式的一次性用ListView把这些数据全部加载进来，因此我们就用分页加载数据，每次加载20页，当用户请求更多的时候再获取更多数据，
+网络的访问就算网速再快也多多少少会有一定的延迟，因此我们的网络请求是异步处理的，同时从网络加载来的数据使用了2级缓存来处理，第一级是内存级别的缓存 Lrucach?
+，第二级是本地文件的缓存。当ListView加载数据的时候首先从内存中找，如果找不到再去本地文件中找，只有都找不到的情况下才去请求网络。
+
+
+recyclerView   插件式的结构
+layoutManager配合使用
+
+不关心item分割   LayoutManager
+不关心item显示的位置   itemDecoration
+不关心item的增删的动画效果  ItemAnimator
+只关心回收与复用view
+
+holder.getLayoutPosition();替代getView的position以解决插入后位置不变的问题
